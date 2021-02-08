@@ -1,1 +1,6 @@
 .env
+__pycache__/
+build/
+dist/
+bot.spec/
+bot.spec
