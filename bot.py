@@ -20,6 +20,8 @@ api = tweepy.API(auth)
 
 
 def like_and_retweet():
+    print("Checking the timeline...")
+    interacted = False
     public_tweets = api.home_timeline()
     for tweet in public_tweets:
         if tweet._json['user']['screen_name'] == "AviiWorkspace":
@@ -27,10 +29,16 @@ def like_and_retweet():
                 api.create_favorite(tweet._json['id'])
                 print("Tweet #" +
                       str(tweet._json['id']) + " has been liked.")
+                interacted = True
             if not tweet._json['retweeted']:
                 api.retweet(tweet._json['id'])
                 print("Tweet #" +
                       str(tweet._json['id']) + " has been retweeted!")
+                interacted = True
+    if not interacted:
+        print("Nothing new...")
+    else:
+        interacted = False
 
 
 # Greet user and run once on startup
