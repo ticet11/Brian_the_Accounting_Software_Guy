@@ -18,15 +18,25 @@ api = tweepy.API(auth)
 
 # Beginning Functionality #
 
-print("Brian the Accounting Software Guy has awakened from his deep slumber.")
 
 def like_and_retweet():
     public_tweets = api.home_timeline()
     for tweet in public_tweets:
-        if tweet._json['user']['screen_name'] == "AviiWorkspace" and not tweet._json['favorited']:
-            api.create_favorite(tweet._json['id'])
-            api.retweet(tweet._json['id'])
-            print("Brian has liked and retweeted!")
+        if tweet._json['user']['screen_name'] == "AviiWorkspace":
+            if not tweet._json['favorited']:
+                api.create_favorite(tweet._json['id'])
+                print("Tweet #" +
+                      str(tweet._json['id']) + " has been liked.")
+            if not tweet._json['retweeted']:
+                api.retweet(tweet._json['id'])
+                print("Tweet #" +
+                      str(tweet._json['id']) + " has been retweeted!")
+
+
+# Greet user and run once on startup
+print("Brian the Accounting Software Guy has awakened from his deep slumber.")
+like_and_retweet()
+print("Brian will check the feed again every couple of hours from now on.")
 
 schedule.every(102).minutes.do(like_and_retweet)
 
